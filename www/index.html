@@ -69,15 +69,6 @@
             }
         }
 
-        // This function is called when someone finishes with the Login
-        // Button.  See the onlogin handler attached to it in the sample
-        // code below.
-        function checkLoginState() {
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-        };
-
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1183730451645695',
@@ -134,12 +125,12 @@
             <div class="grid">
                 <section class="welcome__app">
                     <div class="welcome__in">
-                        <p>Olá Bambam, seja bem-vindo!</p>
+                        <p>Olá Natalia, seja bem-vinda!</p>
                         <img class="icon__security" src="img/icon_security.png" alt="Monizy Security">
                     </div>
                     <div class="call__sign-up">
                         <p>Finalize seu cadastro Master Pass e aproveite todas as vantagens.</p>
-                        <button onclick="app.loginMaster()" class="btn__sign-up--masterpass sign-up__masterpass"><img src="img/btn_masterpass.png" alt="Cadastro MasterPass"></button>
+                        <img onclick="app.loginMaster()" src="img/btn_masterpass.png" alt="Cadastro MasterPass">
                     </div>
                 </section>
             </div>
@@ -152,7 +143,7 @@
                     <img src="img/logo_header.png" alt="" class="header__brand">
                 </header>
                 <main class="barcode__generated">
-                    <p>Olá Bambam, o código para pagamento da sua compra é:</p>
+                    <p>Olá Natalia, o código para pagamento da sua compra é:</p>
                     <img class="main__barcode" src="img/barcode.png" alt="Código Bambam">
                 </main>
             </div>
@@ -196,6 +187,34 @@
               <button class="btn__validate__phone">Enviar</button>
             </form>
           </div>
+        </div>
+    </div>
+    <div class="hidden app validate__phone" id="insert__buy">
+        <div class="main__wrapper">
+          <div class="grid">
+            <p>Digite o valor da compra:</p>
+            <form class="form__validate__phone" action="">
+              <input type="number" id="" name="" placeholder="R$ 999,99">
+              <p class="validate__phone__warn">Você só precisa ler o código do consumidor</p>
+              <button onclick="app.cameraBuy()" class="btn__validate__phone">Fazer leitura</button>
+            </form>
+          </div>
+        </div>
+    </div>
+    <div class="hidden app bg--white" id="sold__item">
+        <div class="main__wrapper">
+            <div class="grid">
+                <header class="main__header">
+                  <img src="img/logo_header.png" alt="" class="header__brand">
+                </header>
+                <main class="feedback__payment">
+                  <p>Venda realizada com Sucesso!</p>
+                  <img class="feedback__payment--ok" src="img/icon_feedback_ok.png" alt="Pagamento realizado com sucesso!">
+                  <button onclick="app.transition('sold__item', 'insert__buy');" class="btn__payment--ok">
+                    OK
+                  </button>
+                </main>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>

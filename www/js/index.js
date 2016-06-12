@@ -67,6 +67,26 @@ var views = {
         out: function ( ) {
             document.getElementById( 'payment__done' ).classList.add( 'hidden' );
         }
+    },
+    "insert__buy": {
+        in: function ( ) {
+            document.getElementById( 'insert__buy' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'insert__buy' ).classList.add( 'hidden' );
+        }
+    },
+    "sold__item": {
+        in: function ( ) {
+            document.getElementById( 'sold__item' ).classList.remove( 'hidden' );
+            setTimeout( function () {
+                navigator.notification.alert("Hoje é aniversário de Natalia, deseje parabéns para ela!", 
+                    function(){ }, "Olá Cauê", "Obrigado");
+            }, 3000 );
+        },
+        out: function ( ) {
+            document.getElementById( 'sold__item' ).classList.add( 'hidden' );
+        }
     }
 };
 
@@ -150,7 +170,7 @@ var app = {
             views[ dest ].in();
         }, 400 );
     },
-    camera: function ( ) {
+    cameraBuy: function ( ) {
         event.preventDefault();
         if (!navigator.camera) {
             app.showAlert("Camera API not supported", "Error");
@@ -163,7 +183,7 @@ var app = {
                         };
         navigator.camera.getPicture(
             function(imageData) {
-                document.getElementById('newPic').src = "data:image/jpeg;base64," + imageData;
+                app.transition( 'insert__buy', 'sold__item' );
             },
             function() {
                 app.showAlert('Error taking picture', 'Error');
@@ -179,6 +199,9 @@ var app = {
         app.transition( 'master__login', 'main__screen' );
     },
     openPhone: function () {
-        app.transition( 'face__login', 'validate__phone' );
+        app.transition( 'face__login', 'insert__buy' );
+    },
+    goHome: function ( from ) {
+        app.transition( from, 'main__screen' );
     }
 };
