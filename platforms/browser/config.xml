@@ -6,9 +6,22 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>Hello World</name>
+    <feature name="BarcodeScanner">
+        <param name="browser-package" value="BarcodeScanner" />
+    </feature>
+    <feature name="FacebookConnectPlugin">
+        <param name="browser-package" value="FacebookConnectPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <plugin name="FacebookConnectPlugin" value="FacebookConnectPlugin" />
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <name>Monizy</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Monizy contactless payments for everyone.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team

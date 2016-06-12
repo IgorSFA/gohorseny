@@ -27,7 +27,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -37,21 +37,154 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+<!-- === GOOGLE FONTS === -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>Monify</title>
 </head>
 
 <body onload="app.initialize();">
-    <div class="hidden app" id="app1">
-        <img class="logo" src="img/logo_white.png"/>
+    <script>
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                testAPI();
+            } else if (response.status === 'not_authorized') {
+                // The person is logged into Facebook, but not your app.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+            } else {
+                // The person is not logged into Facebook, so we're not sure if
+                // they are logged into this app or not.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                'into Facebook.';
+            }
+        }
+
+        // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        };
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1183730451645695',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v2.6'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+                console.log('Successful login for: ' + response.name);
+                app.transition('face__login', 'main__screen');
+                document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+    </script>
+    <div class="hidden app" id="load__screen">
+        <img class="logo" src="img/LOGO_FULL_WHITE.png"/>
     </div>
-    <div class="hidden app" id="app2">
-        <h1>Faça o login :)</h1>
-        <button href="#" onclick="app.transition('app2', 'app1');">Camera</button>
+    <div class="hidden app" id="face__login">
+        <div class="main__wrapper">
+            <div class="grid">
+              <div class="brand">
+                <img src="img/logo_white.png" alt="Monizy" class="brand">
+              </div>
+              <section class="login">
+                <button onclick="app.loginFb()" class="btn__login btn__login--fb">
+                  Entrar com Facebook
+                </button>
+                <span class="or__choice">ou</span>
+                <a href="#" class="sign__up">Cadastre-se</a>
+              </section>
+              <section class="sale__choice">
+                <p>Você é estabelecimento? <a href="#">Clique aqui</a></p>
+              </section>
+            </div>
+        </div>
     </div>
-    <div class="hidden app" id="app3">
-        <p>Miau</p>
+    <div class="hidden app" id="master__login">
+        <div class="main__wrapper">
+            <div class="grid">
+                <section class="welcome__app">
+                    <div class="welcome__in">
+                        <p>Olá Bambam, seja bem-vindo!</p>
+                        <img class="icon__security" src="img/icon_security.png" alt="Monizy Security">
+                    </div>
+                    <div class="call__sign-up">
+                        <p>Finalize seu cadastro Master Pass e aproveite todas as vantagens.</p>
+                        <button onclick="app.loginMaster()" class="btn__sign-up--masterpass sign-up__masterpass"><img src="img/btn_masterpass.png" alt="Cadastro MasterPass"></button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="hidden app bg--white" id="main__screen">
+        <div class="main__wrapper">
+            <div class="grid">
+                <header class="main__header">
+                    <img src="img/logo_header.png" alt="" class="header__brand">
+                </header>
+                <main class="barcode__generated">
+                    <p>Olá Bambam, o código para pagamento da sua compra é:</p>
+                    <img class="main__barcode" src="img/barcode.png" alt="Código Bambam">
+                </main>
+            </div>
+        </div>
+        <!-- === FOOTER DEFAULT === -->
+        <footer class="main__footer">
+            <nav class="main__footer__navegation">
+                <ul>
+                    <li><a href="#"><img src="img/icon_footer_history.png" alt="Histórico de Pagamentos" class="main__footer__icon icon--history"></a></li>
+                    <li><a href="#"><img src="img/icon_footer_local.png" alt="Estabelecimentos MasterPass" class="main__footer__icon icon--location"></a></li>
+                    <li><a href="#"><img src="img/icon_footer_badge.png" alt="" class="main__footer__icon icon--badge"></a></li>
+                    <li><a href="#"><img src="img/icon_footer_settings.png" alt="" class="main__footer__icon icon--settings"></a></li>
+                    <li><a href="#"><img src="img/icon_footer_more.png" alt="" class="main__footer__icon icon--more"></a></li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    <div class="hidden app bg--white" id="payment__done">
+        <div class="main__wrapper">
+            <div class="grid">
+                <header class="main__header">
+                  <img src="img/logo_header.png" alt="" class="header__brand">
+                </header>
+                <main class="feedback__payment">
+                  <p>Pagamento realizado com Sucesso!</p>
+                  <img class="feedback__payment--ok" src="img/icon_feedback_ok.png" alt="Pagamento realizado com sucesso!">
+                  <button class="btn__payment--ok">
+                    OK
+                  </button>
+                </main>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/handlebars.js"></script>

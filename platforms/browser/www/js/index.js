@@ -20,20 +20,44 @@
 
 
 var views = {
-    "app1": {
+    "load__screen": {
         in: function ( ) {
-            document.getElementById( 'app1' ).classList.remove( 'hidden' );
+            document.getElementById( 'load__screen' ).classList.remove( 'hidden' );
         },
         out: function ( ) {
-            document.getElementById( 'app1' ).classList.add( 'hidden' );
+            document.getElementById( 'load__screen' ).classList.add( 'hidden' );
         }
     },
-    "app2": {
+    "face__login": {
         in: function ( ) {
-            document.getElementById( 'app2' ).classList.remove( 'hidden' );
+            document.getElementById( 'face__login' ).classList.remove( 'hidden' );
         },
         out: function ( ) {
-            document.getElementById( 'app2' ).classList.add( 'hidden' );
+            document.getElementById( 'face__login' ).classList.add( 'hidden' );
+        }
+    },
+    "master__login": {
+        in: function ( ) {
+            document.getElementById( 'master__login' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'master__login' ).classList.add( 'hidden' );
+        }
+    },
+    "main__screen": {
+        in: function ( ) {
+            document.getElementById( 'main__screen' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'main__screen' ).classList.add( 'hidden' );
+        }
+    },
+    "payment__done": {
+        in: function ( ) {
+            document.getElementById( 'payment__done' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'payment__done' ).classList.add( 'hidden' );
         }
     }
 };
@@ -56,10 +80,10 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         console.log( 'renderme' );
-        views[ 'app1' ].in();
+        views[ 'load__screen' ].in();
 
         setTimeout( function () {
-            app.transition('app1', 'app2');
+            app.transition('load__screen', 'face__login');
         }, 800 );
 
         //app.pushNotification();
@@ -119,6 +143,32 @@ var app = {
         }, 400 );
     },
     camera: function ( ) {
-        console.log('ho');
-    }
+        event.preventDefault();
+        if (!navigator.camera) {
+            app.showAlert("Camera API not supported", "Error");
+            return;
+        }
+        var options =   {   quality: 100,
+                            destinationType: Camera.DestinationType.DATA_URL,
+                            sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+                            encodingType: 1     // 0=JPG 1=PNG
+                        };
+        navigator.camera.getPicture(
+            function(imageData) {
+                document.getElementById('newPic').src = "data:image/jpeg;base64," + imageData;
+            },
+            function() {
+                app.showAlert('Error taking picture', 'Error');
+            },
+            options);
+
+        return false;
+    },
+    loginFb: function ( ) {
+        app.transition( 'face__login', 'master__login' );
+    },
+    loginMaster: function ( ) {
+        app.transition( 'master__login', 'main__screen' );
+    },
+
 };
