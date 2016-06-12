@@ -238,7 +238,7 @@ h1 {
   padding: 15px 0;
 }
 .header__brand{
-  margin: 0 auto;
+  margin: 25px auto 0;
   padding: 0 30%;
   width: 112px;
 }
@@ -255,6 +255,7 @@ h1 {
 }
 .main__footer__navegation{
   background: #f9f9f9;
+  height: 54px;
   border-top: 1px solid #f0f0f0;
   position: absolute;
   bottom: 0;
@@ -262,12 +263,12 @@ h1 {
 }
 .main__footer__navegation ul{
   list-style: none;
-  padding: 0;
+  padding: 6px 0 0;
 }
 .main__footer__navegation ul li{
   display: inline-block;
   padding: 0 5px;
-  margin: 0 12px;
+  margin: 0 8px;
 }
 
 /*
@@ -277,9 +278,12 @@ h1 {
 .feedback__payment{
   margin: 0 50px;
 }
+.feedback__payment--ok{
+  margin: 0 15px;
+}
 .feedback__payment p{
   color: #0795c1;
-  margin: 25px auto;
+  margin: 10px auto 10px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -289,30 +293,125 @@ h1 {
   border-radius: 5px;
   color: #fff;
   font-size: 16px;
-  padding: 8px 10px;
+  padding: 8px 10px 0;
   width: 44px;
   margin: 70px;
 }
-
+.recibo h4{
+  color: #aecb0e;
+  margin: 12px auto;
+  font-size: 20px;
+  text-align: center;
+}
+.block__recibo{
+  display: block;
+  clear: both;
+}
+.recibo__details{
+  color: #076684;
+  font-size: 14px;
+  line-height: 24px;
+}
+.recibo__valor{
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+.left__f{
+  float: left;
+}
+.right__f{
+  float: right;
+}
 /*
 ===== FEEDBACK BADGE WIN
 */
 
-.badge__feedback{
+.icon__feedback , .history__feedback{
   position: relative;
 }
-.badge__feedback:before{
+
+.icon__feedback:before{
   content: url(../img/icon_feed.png);
   position: absolute;
   top: -35px;
+  left: 0;
 }
-.badge__feedback:after{
+.icon__feedback:after{
   background: #f8991d;
   content: "";
   position: absolute;
   width: 6px;
   height: 6px;
-  bottom: -15px;
-  left: 20px;
+  bottom: -16px;
+  left: 15px;
   border-radius: 3px;
+}
+
+.history__feedback:before{
+  content: url(../img/icon_feed-history.png);
+  position: absolute;
+  top: -35px;
+  left: 0px;
+}
+.history__feedback:after{
+  background: #076684;
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  bottom: -16px;
+  left: 14px;
+  border-radius: 3px;
+}
+.points__list__brand{
+  float: left;
+  padding-right: 10px;
+}
+.brand__points{
+  border-bottom: 1px solid #ccc;
+  margin: 15px 0;
+  padding-bottom: 10px;
+}
+.brand__points:nth-child(3){
+  border-bottom: 0;
+}
+
+.list__details h4{
+  color: #076684;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+.list__details span{
+  color: #076684;
+  font-size: 12px;
+}
+.star__rewards{
+  display: block;
+  padding: 5px 0;
+}
+
+/*********************/
+.form__brand{
+  margin: 0;
+  padding: 0;
+}
+.form__brand .logo{
+  padding: 0 25%;
+  margin: 0;
+  width: 50%;
+}
+.form__account{
+  margin: 0 auto;
+}
+.spacer__put input{
+  display: block;
+  height: 25px;
+  margin: 10px;
+  width: 240px;
+}
+.spacer__put label{
+  color: #fff;
+  font-size: 12px;
 }

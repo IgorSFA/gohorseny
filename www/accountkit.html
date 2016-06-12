@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<head>
+	<link rel="stylesheet" href="css/index.css" />
+  <title>Account Kit</title>
+  
+</head>
+<!-- HTTPS required. HTTP will give a 403 forbidden response -->
+<script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+<script src="js/server.js"></script>
+<script>
+  // initialize Account Kit with CSRF protection
+  AccountKit_OnInteractive = function(){
+    AccountKit.init(
+      {
+      appId      : '1183730451645695',
+      state      : true,
+      version    : 'v2.6'	
+    });
+      }
+​
+  // login callback
+  function loginCallback(response) {
+    console.log(response);
+    if (response.status === "PARTIALLY_AUTHENTICATED") {
+      document.getElementById("code").value = response.code;
+      document.getElementById("csrf_nonce").value = response.state;
+      document.getElementById("my_form").submit();
+    }
+    else if (response.status === "NOT_AUTHENTICATED") {
+      // handle authentication failure
+    }
+    else if (response.status === "BAD_PARAMS") {
+      // handle bad parameters
+    }
+  }
+​
+  // phone form submission handler
+  function phone_btn_onclick() {
+    var country_code = document.getElementById("country_code").value;
+    var ph_num = document.getElementById("phone_num").value;
+    AccountKit.login('PHONE', 
+      {countryCode: country_code, phoneNumber: ph_num}, // will use default values if this is not specified
+      loginCallback);
+  }
+​
+​
+  // email form submission handler
+  function email_btn_onclick() {
+    var email_address = document.getElementById("email").value;
+​
+    AccountKit.login('EMAIL', {emailAddress: email_address}, loginCallback);
+  }
+​
+</script>
+​
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1183730451645695',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+​
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+​
+​
+<body>
+<div class="main__wrapper">
+	<div class="grid">
+    <div class="form__brand">
+      <img class="logo" src="img/LOGO_FULL_WHITE.png"/>
+    </div>
+		<form class="form__account">
+			<div class="spacer__put">
+        <label for="">Digite o codigo do pais(ex.:+55):</label>
+				<input class="form__validate__phone" type="text" id="country_code" />			
+			</div>
+			<div class="spacer__put">
+        <label for="">Digite o numero do telefone (ex.:21986635096)</label>
+				<input type="text" id="phone_num"/>	
+			</div>
+			<div class="spacer__put">
+        <label for="">Digite o email:</label>
+				<input type="text" id="email"/>	
+			</div>
+		</form>
+		<button class="btn__validate__phone" onclick="phone_btn_onclick();">Login via SMS</button>
+​
+<button class="btn__validate__phone" onclick="email_btn_onclick();">Login via Email</button>
+	</div>
+</div>
+ 
+<!--
+  <div>Logged In to Account Kit:</div>
+  <div>User Token {{user_access_token}}</div>
+  <div>User Token Expires at {{expires_at}}</div>
+  <div>User Id {{user_id}}</div>
+  <div>User phone: {{phone_num}}</div>
+  <div>User email: {{email_addr}}</div>
+-->
+​
+</body>
+</html>
