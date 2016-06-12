@@ -44,6 +44,14 @@ var views = {
             document.getElementById( 'master__login' ).classList.add( 'hidden' );
         }
     },
+    "validate__phone": {
+        in: function ( ) {
+            document.getElementById( 'validate__phone' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'validate__phone' ).classList.add( 'hidden' );
+        }
+    },
     "main__screen": {
         in: function ( ) {
             document.getElementById( 'main__screen' ).classList.remove( 'hidden' );
@@ -170,5 +178,7 @@ var app = {
     loginMaster: function ( ) {
         app.transition( 'master__login', 'main__screen' );
     },
-
+    openPhone: function () {
+        app.transition( 'face__login', 'validate__phone' );
+    }
 };

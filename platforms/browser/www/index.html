@@ -124,7 +124,7 @@
                 <a href="#" class="sign__up">Cadastre-se</a>
               </section>
               <section class="sale__choice">
-                <p>Você é estabelecimento? <a href="#">Clique aqui</a></p>
+                <p>Você é estabelecimento? <a href="#" onclick="app.openPhone()">Clique aqui</a></p>
               </section>
             </div>
         </div>
@@ -197,6 +197,18 @@
                 </ul>
             </nav>
         </footer>
+    </div>
+    <div class="hidden app validate__phone" id="validate__phone">
+        <div class="main__wrapper">
+          <div class="grid">
+            <p>Digite o número do seu telefone celular:</p>
+            <form class="form__validate__phone" action="">
+              <input type="number" id="" name="" placeholder="+55 (XX) 2222-9999">
+              <p class="validate__phone__warn">Você irá receber um código de validação.</p>
+              <button class="btn__validate__phone">Enviar</button>
+            </form>
+          </div>
+        </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/handlebars.js"></script>

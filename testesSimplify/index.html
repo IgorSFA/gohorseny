@@ -80,12 +80,27 @@
         <button id="process-payment-btn" type="submit">Process Payment</button>
         <div id="buy-with-masterpass-div"></div>
     </form>
-
+    <div id="barCode"></div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
     <script type="text/javascript" src="https://www.simplify.com/commerce/v1/simplify.js"></script>
+    <script src="bcmath-min.js" type="text/javascript"></script>
+    <script src="pdf417-min.js" type="text/javascript"></script>
+    <script src="createCode.js" type="text/javascript"></script>
 
-    <script type="text/javascript">
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCvdj3426KbQ5Xbb-Q0aFYTYuiT1VvkGdI",
+            authDomain: "project-7428217119455399996.firebaseapp.com",
+            databaseURL: "https://project-7428217119455399996.firebaseio.com",
+            storageBucket: "project-7428217119455399996.appspot.com"
+        };
+        firebase.initializeApp(config);
+        var database = firebase.database();
+    
+
+
         function simplifyResponseHandler(data) {
             var $paymentForm = $("#simplify-payment-form");
             // Remove all previous errors
@@ -111,6 +126,8 @@
                 var token = data["id"];
                 // Insert the token into the form so it gets submitted to the server
                 $paymentForm.append("<input type='hidden' name='postToken' value='" + token + "' />");
+
+                $('#id').append(createCode($('#barCode'), token));
                 // Submit the form to the server
                 $paymentForm.get(0).submit();
             }
@@ -138,32 +155,35 @@
           console.log(err);
         }
         function masterPassResponseHandler(data, status) {
-          var $paymentForm = $("#simplify-payment-form");
-          // Remove all previous errors
-          $(".error").remove();
-          // Check for errors
-          if (data.error) {
-              // Show any validation errors
-              if (data.error.code == "validation") {
-                  var fieldErrors = data.error.fieldErrors,
-                      fieldErrorsLength = fieldErrors.length,
-                      errorList = "";
-                  for (var i = 0; i < fieldErrorsLength; i++) {
-                      errorList += "<div class='error'>Field: '" + fieldErrors[i].field +
-                                   "' is invalid - " + fieldErrors[i].message + "</div>";
-                  }
-                  // Display the errors
-                  $paymentForm.after(errorList);
-              }
-          } else {
-              // The token contains id, last4, and card type
-              var token = data.cardToken["id"];
-              // Insert the token into the form so it gets submitted to the server
-              $paymentForm.append("<input type='hidden' name='simplifyToken' value='" + token + "' />");
-              // Submit the form to the server
-              $paymentForm.get(0).submit();
-          }
+        var $paymentForm = $("#simplify-payment-form");
+        // Remove all previous errors
+        $(".error").remove();
+        // Check for errors
+        if (data.error) {
+            // Show any validation errors
+            if (data.error.code == "validation") {
+                var fieldErrors = data.error.fieldErrors,
+                    fieldErrorsLength = fieldErrors.length,
+                    errorList = "";
+                for (var i = 0; i < fieldErrorsLength; i++) {
+                    errorList += "<div class='error'>Field: '" + fieldErrors[i].field +
+                                 "' is invalid - " + fieldErrors[i].message + "</div>";
+                }
+                // Display the errors
+                $paymentForm.after(errorList);
+            }
+        } else {
+            // The token contains id, last4, and card type
+            var token = data.cardToken["id"];
+            console.log(data);
+            alert('wait');
+            // Insert the token into the form so it gets submitted to the server
+            $paymentForm.append("<input type='hidden' name='postToken' value='" + token + "' />");
+            // Submit the form to the server
+            alert(token);
+            $paymentForm.get(0).submit();
         }
+    }
     </script>
 </body>
 </html>

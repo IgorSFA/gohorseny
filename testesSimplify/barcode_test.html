@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<title>Barcode Generator Test</title>
+	       
+	<script src="bcmath-min.js" type="text/javascript"></script>
+    <script src="pdf417-min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.simplify.com/commerce/v1/simplify.js"></script>	    
+    
+    <script>
+    var token;
+
+    $(document).ready(function() {
+    $("#simplify-payment-form").on("submit", function() {
+        // Disable the submit button
+        $("#process-payment-btn").attr("disabled", "disabled");
+        // Generate a card token & handle the response
+        SimplifyCommerce.generateToken({
+            key: "sbpb_MmRkMWQ3YjItMGFmNS00OGU2LWE2ZmMtZWE1Y2EyZmVlZjAx",
+            card: {
+                number: "5555551232253333",
+                cvc: "123",
+                expMonth:"01", 
+                expYear: "23" 
+            }
+        }, simplifyResponseHandler);
+        // Prevent the form from submitting
+        return false;
+        });
+    });
+
+
+    function simplifyResponseHandler(data) {
+    var $paymentForm = $("#simplify-payment-form");
+    // Remove all previous errors
+    $(".error").remove();
+    // Check for errors
+    if (data.error) {
+        // Show any validation errors
+        if (data.error.code == "validation") {
+            var fieldErrors = data.error.fieldErrors,
+                fieldErrorsLength = fieldErrors.length,
+                errorList = "";
+            for (var i = 0; i < fieldErrorsLength; i++) {
+                errorList += "<div class='error'>Field: '" + fieldErrors[i].field +
+                             "' is invalid - " + fieldErrors[i].message + "</div>";
+            }
+            // Display the errors
+            $paymentForm.after(errorList);
+        }
+        // Re-enable the submit button
+        $("#process-payment-btn").removeAttr("disabled");
+    } else {
+        // The token contains id, last4, and card type
+        token = data["id"];
+
+        console.log(token);
+        // Insert the token into the form so it gets submitted to the server
+        $paymentForm.append("<input type='hidden' name='simplifyToken' value='" + token + "' />");
+        // Submit the form to the server
+        $paymentForm.get(0).submit();
+    }
+}
+
+        window.onload = function() { 
+
+            var hub3_code = token;    //ENTRAR COM O TOKEN
+
+            PDF417.init(hub3_code);             
+
+            var barcode = PDF417.getBarcodeArray();
+
+            // block sizes (width and height) in pixels
+            var bw = 2;
+            var bh = 2;
+
+            // create canvas element based on number of columns and rows in barcode
+            var canvas = document.createElement('canvas');
+            canvas.width = bw * barcode['num_cols'];
+            canvas.height = bh * barcode['num_rows'];
+            document.getElementById('barcode').appendChild(canvas);
+
+            var ctx = canvas.getContext('2d');                    
+
+            // graph barcode elements
+            var y = 0;
+            // for each row
+            for (var r = 0; r < barcode['num_rows']; ++r) {
+                var x = 0;
+                // for each column
+                for (var c = 0; c < barcode['num_cols']; ++c) {
+                    if (barcode['bcode'][r][c] == 1) {                        
+                        ctx.fillRect(x, y, bw, bh);
+                    }
+                    x += bw;
+                }
+                y += bh;
+            }            
+        }
+
+        // function generate() {
+        //    // var hub3_code = document.getElementById("textToEncode");
+
+        //     PDF417.init(hub3_code);             
+
+        //     var barcode = PDF417.getBarcodeArray();
+
+        //     // block sizes (width and height) in pixels
+        //     var bw = 2;
+        //     var bh = 2;
+
+        //     // create canvas element based on number of columns and rows in barcode
+        //     var container = document.getElementById('barcode');
+        //     container.removeChild(container.firstChild);
+
+        //     var canvas = document.createElement('canvas');
+        //     canvas.width = bw * barcode['num_cols'];
+        //     canvas.height = bh * barcode['num_rows'];
+        //     container.appendChild(canvas);
+
+        //     var ctx = canvas.getContext('2d');                    
+
+        //     // graph barcode elements
+        //     var y = 0;
+        //     // for each row
+        //     for (var r = 0; r < barcode['num_rows']; ++r) {
+        //         var x = 0;
+        //         // for each column
+        //         for (var c = 0; c < barcode['num_cols']; ++c) {
+        //             if (barcode['bcode'][r][c] == 1) {                        
+        //                 ctx.fillRect(x, y, bw, bh);
+        //             }
+        //             x += bw;
+        //         }
+        //         y += bh;
+        //     }       
+        // }
+
+    
+    </script>
+
+</head>
+<body>
+<p><button onclick="generate()">Escaneie</button></p>
+
+<div id="barcode"></div>
+
+</body>
+
+</html>
