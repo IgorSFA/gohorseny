@@ -16,6 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var views = {
+    "app1": {
+        in: function ( ) {
+            document.getElementById( 'app1' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'app1' ).classList.add( 'hidden' );
+        }
+    },
+    "app2": {
+        in: function ( ) {
+            document.getElementById( 'app2' ).classList.remove( 'hidden' );
+        },
+        out: function ( ) {
+            document.getElementById( 'app2' ).classList.add( 'hidden' );
+        }
+    }
+};
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -33,17 +53,70 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        console.log( 'renderme' );
+        views[ 'app1' ].in();
+
+        setTimeout( function () {
+            app.transition('app1', 'app2');
+        }, 800 );
+
+        //app.pushNotification();
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    pushNotification: function () {
+        var push = PushNotification.init({
+          "android": {
+            "senderID": undefined
+          },
+          "ios": {
+            "sound": true,
+            "vibration": true,
+            "badge": true
+          },
+          "windows": {}
+        });
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        push.on('registration', function(data) {
+          console.log('registration event: ' + data.registrationId);
 
-        console.log('Received Event: ' + id);
+          var oldRegId = localStorage.getItem('registrationId');
+          if (oldRegId !== data.registrationId) {
+            // Save new registration ID
+            localStorage.setItem('registrationId', data.registrationId);
+            // Post registrationId to your app server as the value has changed
+          }
+
+          var parentElement = document.getElementById('registration');
+          var listeningElement = parentElement.querySelector('.waiting');
+          var receivedElement = parentElement.querySelector('.received');
+
+          listeningElement.setAttribute('style', 'display:none;');
+          receivedElement.setAttribute('style', 'display:block;');
+        });
+
+        push.on('error', function(e) {
+          console.log("push error = " + e.message);
+        });
+
+        push.on('notification', function(data) {
+          console.log('notification event');
+          navigator.notification.alert(
+            data.message,         // message
+            null,                 // callback
+            data.title,           // title
+            'Ok'                  // buttonName
+          );
+        });
+    },
+    transition: function ( from, dest ) {
+        var fromEl = document.getElementById( from );
+        var toEl = document.getElementById( dest );
+
+        views[ from ].out();
+        setTimeout( function () {
+            views[ dest ].in();
+        }, 400 );
+    },
+    camera: function ( ) {
+        console.log('ho');
     }
 };
