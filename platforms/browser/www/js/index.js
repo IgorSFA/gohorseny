@@ -55,6 +55,7 @@ var views = {
     "main__screen": {
         in: function ( ) {
             document.getElementById( 'main__screen' ).classList.remove( 'hidden' );
+            app.generateToken();
         },
         out: function ( ) {
             document.getElementById( 'main__screen' ).classList.add( 'hidden' );
@@ -203,5 +204,22 @@ var app = {
     },
     goHome: function ( from ) {
         app.transition( from, 'main__screen' );
+    },
+    generateToken: function () {
+        // Generate a card token & handle the response
+        SimplifyCommerce.generateToken({
+            key: "sbpb_ZmQ0OGM2MTUtNWE5OC00MGVhLTg3NzYtNzcxNDlmYmUwMTg3",
+            card: {
+                number: "5555555555554444",
+                cvc: "123",
+                expMonth: "01",
+                expYear: "17"
+            }
+        }, function ( data ) {
+            var token = data["id"];
+            createCode( document.getElementById('barCode'), token );
+        } );
+        // Prevent the form from submitting
+        return false;
     }
 };
