@@ -18,19 +18,21 @@
  */
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    text-decoration: none;
 }
 
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color: rgb( 28, 106, 180);
+    background: linear-gradient(-120deg, #076684 -40%, #0795c1);
+    -webkit-background: linear-gradient(-120deg, #076684 -20%, #0795c1);
     background-attachment:fixed;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    /*font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;*/
     font-size:12px;
     margin:0px;
     padding:0px;
-    text-transform:uppercase;
     width: 100vw;
     height: 100vh;
 }
@@ -85,4 +87,228 @@ h1 {
 
 #app2 {
     background-color: white;
+}
+
+.main__wrapper{
+  margin: 0 auto;
+  max-width: 280px;
+}
+.grid{
+  margin: 0 auto;
+}
+.brand{
+  padding: 40px 30px 0;
+}
+.login{
+  margin: 0 auto;
+  width: 225px;
+}
+.btn__login{
+  display: block;
+  background: #076684;
+  color: #fff;
+  font-size: 18px;
+  border: none; /* Take out with login FB API*/
+  padding: 15px 0; /* Take out with login FB API*/
+  margin: 35px auto;
+  width: 225px;
+}
+.or__choice{
+  color: #fff;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+.or__choice:before{
+  content: "";
+  background: white;
+  height: 1px;
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 90px;
+}
+.or__choice:after{
+  content: "";
+  background: white;
+  height: 1px;
+  position: absolute;
+  right: 0;
+  top: 7px;
+  width: 90px;
+}
+.sign__up{
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  margin: 10px auto;
+  text-align: center;
+}
+.sale__choice{
+  color: #e8e8e8;
+  margin: 0 auto;
+  text-align: center;
+  width: 260px;
+}
+.sale__choice a{
+  color: #f8991d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 
+======== FEEDBACK LOGIN API FACEBOOK
+*/
+
+.welcome__app{
+  color: #fff;
+  margin: 30px 0 0;
+  padding: 0;
+}
+.welcome__in p{
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.welcome__app .icon__security{
+  margin: 0 auto;
+  padding: 8% 30%;
+}
+.call__sign-up{
+  display: block;
+  text-align: center;
+}
+.call__sign-up{
+  font-size: 18px;
+  font-weight: 300;
+}
+
+/*
+======= ACCOUNT KIT VALIDATE PHONE NUMBER
+*/
+
+.validate__phone{
+  background: #fff;
+  margin-top: -15px;
+  padding: 20px 35px;
+}
+.validate__phone{
+  color: #ccc;
+  font-size: 16px;
+}
+.form__validate__phone input{
+  color: #e8e8e8;
+  font-size: 18px;
+  font-weight: 300;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  width: 220px;
+}
+.form__validate__phone ::-webkit-input-placeholder{
+  color:#e8e8e8;
+}
+.validate__phone__warn{
+  color: #f8991d;
+}
+.btn__validate__phone{
+  background: #aecb0e;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 10px 12px;
+  text-transform: uppercase;
+}
+
+/*
+======= SUPPORT PAY CODE
+*/
+
+.bg--white{
+  background: #fff;
+  height: auto;
+}
+.main__header{
+  padding: 15px 0;
+}
+.header__brand{
+  margin: 0 auto;
+  padding: 0 30%;
+  width: 112px;
+}
+.barcode__generated p{
+  font-size: 16px;
+  text-align: center;
+}
+.main__barcode{
+  margin: 10% auto;
+  padding: 0 10%;
+}
+.main__footer{
+  width: 100%;
+}
+.main__footer__navegation{
+  background: #f9f9f9;
+  border-top: 1px solid #f0f0f0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.main__footer__navegation ul{
+  list-style: none;
+  padding: 0;
+}
+.main__footer__navegation ul li{
+  display: inline-block;
+  padding: 0 5px;
+  margin: 0 12px;
+}
+
+/*
+====== FEEDBACK PAYMENT OK
+*/
+
+.feedback__payment{
+  margin: 0 50px;
+}
+.feedback__payment p{
+  color: #0795c1;
+  margin: 25px auto;
+  text-align: center;
+  text-transform: uppercase;
+}
+.btn__payment--ok{
+  background: #0795c1;
+  border:none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 10px;
+  width: 44px;
+  margin: 70px;
+}
+
+/*
+===== FEEDBACK BADGE WIN
+*/
+
+.badge__feedback{
+  position: relative;
+}
+.badge__feedback:before{
+  content: url(../img/icon_feed.png);
+  position: absolute;
+  top: -35px;
+}
+.badge__feedback:after{
+  background: #f8991d;
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  bottom: -15px;
+  left: 20px;
+  border-radius: 3px;
 }
