@@ -43,7 +43,7 @@ body {
     position:absolute;
     display: flex;
     align-items: center;
-    justify-content:center;
+    justify-content:stretch;
     flex-wrap: wrap;
     top: 0;
     left: 0;
@@ -93,6 +93,7 @@ h1 {
 .main__wrapper{
   margin: 0 auto;
   max-width: 280px;
+  height: 100vh;
 }
 .grid{
   margin: 0 auto;
@@ -201,7 +202,6 @@ h1 {
   font-size: 16px;
 }
 .form__validate__phone input{
-  color: #e8e8e8;
   font-size: 18px;
   font-weight: 300;
   border: none;

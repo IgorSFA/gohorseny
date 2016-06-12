@@ -22,7 +22,9 @@
 var views = {
     "load__screen": {
         in: function ( ) {
-            document.getElementById( 'load__screen' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+                document.getElementById( 'load__screen' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'load__screen' ).classList.add( 'hidden' );
@@ -30,7 +32,9 @@ var views = {
     },
     "face__login": {
         in: function ( ) {
-            document.getElementById( 'face__login' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'face__login' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'face__login' ).classList.add( 'hidden' );
@@ -38,7 +42,9 @@ var views = {
     },
     "master__login": {
         in: function ( ) {
-            document.getElementById( 'master__login' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'master__login' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'master__login' ).classList.add( 'hidden' );
@@ -46,7 +52,9 @@ var views = {
     },
     "validate__phone": {
         in: function ( ) {
-            document.getElementById( 'validate__phone' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'validate__phone' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'validate__phone' ).classList.add( 'hidden' );
@@ -54,7 +62,9 @@ var views = {
     },
     "main__screen": {
         in: function ( ) {
-            document.getElementById( 'main__screen' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'main__screen' ).classList.remove( 'hidden' )},
+            300);
             app.generateToken();
         },
         out: function ( ) {
@@ -63,7 +73,9 @@ var views = {
     },
     "payment__done": {
         in: function ( ) {
-            document.getElementById( 'payment__done' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'payment__done' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'payment__done' ).classList.add( 'hidden' );
@@ -71,19 +83,44 @@ var views = {
     },
     "insert__buy": {
         in: function ( ) {
-            document.getElementById( 'insert__buy' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'insert__buy' ).classList.remove( 'hidden' )},
+            300);
         },
         out: function ( ) {
             document.getElementById( 'insert__buy' ).classList.add( 'hidden' );
         }
     },
+    "bought__item": {
+        in: function ( ) {
+            setTimeout(function () {
+            document.getElementById( 'bought__item' ).classList.remove( 'hidden' )},
+            300);
+        },
+        out: function ( ) {
+            document.getElementById( 'bought__item' ).classList.add( 'hidden' );
+        }
+    },
+    "rewards__screen": {
+        in: function ( ) {
+            setTimeout(function () {
+            document.getElementById( 'rewards__screen' ).classList.remove( 'hidden' )},
+            300);
+        },
+        out: function ( ) {
+            document.getElementById( 'rewards__screen' ).classList.add( 'hidden' );
+        }
+    },
     "sold__item": {
         in: function ( ) {
-            document.getElementById( 'sold__item' ).classList.remove( 'hidden' );
+            setTimeout(function () {
+            document.getElementById( 'sold__item' ).classList.remove( 'hidden' )},
+            300);
+
             setTimeout( function () {
                 navigator.notification.alert("Hoje é aniversário de Natalia, deseje parabéns para ela!", 
                     function(){ }, "Olá Cauê", "Obrigado");
-            }, 3000 );
+            }, 5000 );
         },
         out: function ( ) {
             document.getElementById( 'sold__item' ).classList.add( 'hidden' );
@@ -217,7 +254,11 @@ var app = {
             }
         }, function ( data ) {
             var token = data["id"];
+            document.getElementById('barCode').innerHTML = '';
             createCode( document.getElementById('barCode'), token );
+            setTimeout( function () {
+                app.transition( 'main__screen', 'bought__item' );
+            }, 5000 );
         } );
         // Prevent the form from submitting
         return false;
